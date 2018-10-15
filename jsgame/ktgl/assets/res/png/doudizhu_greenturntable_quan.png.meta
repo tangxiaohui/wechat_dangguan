@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "840ffd8a-706c-4dda-8fe2-16e48ad4e7ed",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "doudizhu_greenturntable_quan": {
+      "ver": "1.0.3",
+      "uuid": "5d6350c9-abd9-4d18-82f2-0b9406cd277b",
+      "rawTextureUuid": "840ffd8a-706c-4dda-8fe2-16e48ad4e7ed",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 247,
+      "height": 244,
+      "rawWidth": 247,
+      "rawHeight": 244,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

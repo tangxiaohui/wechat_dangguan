@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "3a95ddff-d980-4362-a10e-bcb4239c79d2",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "doudizhu_alarmclock": {
+      "ver": "1.0.3",
+      "uuid": "a0b61e96-2c77-466f-94d5-526c1b824b30",
+      "rawTextureUuid": "3a95ddff-d980-4362-a10e-bcb4239c79d2",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 80,
+      "height": 79,
+      "rawWidth": 80,
+      "rawHeight": 79,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

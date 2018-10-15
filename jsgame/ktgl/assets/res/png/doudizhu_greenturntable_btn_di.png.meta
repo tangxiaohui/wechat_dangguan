@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "bd56d05e-ee21-4251-b8c2-1ea9f1ce42c1",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "doudizhu_greenturntable_btn_di": {
+      "ver": "1.0.3",
+      "uuid": "e262233c-c194-44d3-aba0-6d44090c249f",
+      "rawTextureUuid": "bd56d05e-ee21-4251-b8c2-1ea9f1ce42c1",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -3,
+      "trimX": 0,
+      "trimY": 6,
+      "width": 272,
+      "height": 250,
+      "rawWidth": 272,
+      "rawHeight": 256,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
