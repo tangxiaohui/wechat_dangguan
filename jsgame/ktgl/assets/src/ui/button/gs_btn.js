@@ -32,29 +32,15 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
-        var self = this;
-
-        // self.button.node.on(cc.Node.EventType.TOUCH_START, function(event){
-
-        // console.log("按钮按下")
-
-        // });
-
-        // self.button.node.on(cc.Node.EventType.TOUCH_MOVE, function(event){
-
-        // console.log("在按钮上滑动")
-
-        // });
-    },
-
     btnClick(event, customEventData){
          console.log("event=",event.type," data=",customEventData);
-         cc.director.loadScene("GameScene");
+         cc.director.loadScene("MainScene");
     },
 
+    // onLoad () {},
+
     start () {
-        cc.log("启动按钮");
+
     },
 
     // update (dt) {},
