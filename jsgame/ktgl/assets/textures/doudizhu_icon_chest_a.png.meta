@@ -1,10 +1,9 @@
 {
-  "ver": "2.2.0",
+  "ver": "1.0.0",
   "uuid": "4e34a86a-c8f9-493d-ac4f-10e8a5e1cc1b",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
-  "premultiplyAlpha": false,
   "subMetas": {
     "doudizhu_icon_chest_a": {
       "ver": "1.0.3",

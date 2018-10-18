@@ -1,10 +1,9 @@
 {
-  "ver": "2.2.0",
+  "ver": "1.0.0",
   "uuid": "840ffd8a-706c-4dda-8fe2-16e48ad4e7ed",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
-  "premultiplyAlpha": false,
   "subMetas": {
     "doudizhu_greenturntable_quan": {
       "ver": "1.0.3",

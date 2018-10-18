@@ -33,19 +33,27 @@ cc.Class({
     {
         Side
     },
+    ctor(){
+        this.side = null;
+        this.index = 0;
+        this.match_players_node = [];
+    },
     init:function(index){//maxPlayerNum){
         this.side = Math.random() >0.5 && Side.left || Side.right;
         this.index = index
         // for (var i = 1; i < maxPlayerNum; i++) {
-            var node = new cc.Node();
-            var sprite = node.addComponent(cc.Sprite);
-            sprite.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/ic_morenhead0.png'));
+            // var node = new cc.Node();
+            // var sprite = node.addComponent(cc.Sprite);
+            // sprite.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/ic_morenhead0.png'));
         // }
-
-
+        var node = new cc.Node();
+        var sprite = node.addComponent(cc.Sprite);
+        sprite.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/ic_morenhead0.png'));
+        // var node = new cc.Sprite('resources/ic_morenhead0.png');
         this.player = node
+        this.match_players_node[index] = this.player
         // return node
-        return node
+        // return node
     }
 
 });

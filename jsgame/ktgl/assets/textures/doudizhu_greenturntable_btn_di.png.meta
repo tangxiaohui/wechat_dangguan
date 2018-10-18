@@ -1,10 +1,9 @@
 {
-  "ver": "2.2.0",
+  "ver": "1.0.0",
   "uuid": "bd56d05e-ee21-4251-b8c2-1ea9f1ce42c1",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
-  "premultiplyAlpha": false,
   "subMetas": {
     "doudizhu_greenturntable_btn_di": {
       "ver": "1.0.3",

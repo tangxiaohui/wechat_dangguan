@@ -1,14 +1,13 @@
 {
-  "ver": "2.2.0",
+  "ver": "1.0.0",
   "uuid": "a50fae7a-f712-4101-93b6-5afb442f3879",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
-  "premultiplyAlpha": false,
   "subMetas": {
     "ic_morenhead0": {
       "ver": "1.0.3",
-      "uuid": "be88ae61-9340-4903-b2c2-1c38418fa1a5",
+      "uuid": "f3bdca43-d4d3-4e31-8ef6-8758b62f5031",
       "rawTextureUuid": "a50fae7a-f712-4101-93b6-5afb442f3879",
       "trimType": "auto",
       "trimThreshold": 1,
