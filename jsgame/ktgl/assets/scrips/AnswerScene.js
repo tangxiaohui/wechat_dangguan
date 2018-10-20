@@ -48,11 +48,12 @@ cc.Class({
         this.judgement = null;
         this.dead_times = 0;
         //匹配倒计时 10秒 TODO
-        this.Pipei_time = 4; ///改为0跳过匹配阶段 
+        this.Pipei_time = 10; ///改为0跳过匹配阶段 
         //答题时间
         this.Answer_time = 5; 
         //我自己的位置
         this.MyIndex =1;
+        this.MySide = Player.Side.left;
 
     },
     initUI:function(){
@@ -120,7 +121,15 @@ cc.Class({
             }
         }
         //随机出来 我自己是哪个index
-        this.MyIndex = Math.floor(Math.random()*this.match_player_num)
+        this.MySide = Math.random() >0.5 && Player.Side.left || Player.Side.right;
+        if(this.MySide == Player.Side.left)
+        {
+            this.MyIndex = Math.floor( Math.random()*this.left_player_num)
+        }
+        else
+        {
+            this.MyIndex = Math.floor( Math.random()*this.right_player_num)
+        }
         // this.isBeginPipei = true;
         this.BeginGameStatePIPEI();
     },
@@ -160,7 +169,7 @@ cc.Class({
             }
             else{
                 //当前这一秒左边多少人跑路
-                var secendToRunPlayer = (this.Pipei_time -3 )/((this.Pipei_time-2)*this.Pipei_time/2) * this.left_player_num;
+                var secendToRunPlayer = (this.Pipei_time -3 )/28* this.left_player_num;
                 for (var i = 0; i <Math.floor(secendToRunPlayer); i++) {
                     var moveAction = cc.moveTo(this.move_time,this.player_pos_left[left_needToRunPlayer+i]);
                     var delaytime = cc.delayTime(Math.random());
@@ -168,7 +177,7 @@ cc.Class({
                 }
                 left_needToRunPlayer = left_needToRunPlayer+Math.floor(secendToRunPlayer);
                 //当前这一秒右边多少人跑路
-                var secendToRunPlayer =  (this.Pipei_time -3 )/((this.Pipei_time-2)*this.Pipei_time/2) * this.right_player_num;
+                var secendToRunPlayer =  (this.Pipei_time -3 )/28 * this.right_player_num;
                 for (var i = 0; i <Math.floor(secendToRunPlayer); i++) {
                     var moveAction = cc.moveTo(this.move_time,this.player_pos_right[right_needToRunPlayer+i]);
                     var delaytime = cc.delayTime(Math.random());
@@ -207,7 +216,9 @@ cc.Class({
         }
         this.schedule(this.QuestionCallback,1);
     },
-    BeginGameStateJUDGE:function(){
+    //开始判断题目
+    BeginGameStateJUDGE:function()
+    {
         this.btn_wrong.active = false;
         this.btn_right.active = false;
         this.judgeCallback = function(){
@@ -251,7 +262,6 @@ cc.Class({
     //正确的点击
     rightClickEvent:function(){
         //自己的主角往左移动
-        player
         this.judgement = "对";
 
     },
@@ -260,12 +270,8 @@ cc.Class({
         //自己的主要向右移动
         this.judgement = "错";
     },
-    // update(dt)
-    // {
-    //     if(this.gameState == GameState.END)
-    //         return
-    //     switch(this.gameState)
-    //     {
-    //     }
-    // },
+    //自己跑路
+    runMyNode:function(){
+
+    }
 });
