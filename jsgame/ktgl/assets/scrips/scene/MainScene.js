@@ -37,15 +37,16 @@ cc.Class({
         console.log("开始游戏哦！");
         let self = this;
         console.log("click __onClickLogin ");
-        // var xhr = new XMLHttpRequest();
-        //  xhr.onreadystatechange = function () {
-        //      if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
-        //          var response = xhr.responseText;
-        //          console.log(response);
-        //      }
-         // };
-         // xhr.open("GET", "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8888888888888888&redirect_uri=http://mascot.duapp.com/oauth2.php&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect", true);
-         // xhr.send();
+        var xhr = new XMLHttpRequest();
+         xhr.onreadystatechange = function () {
+             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
+                 var response = xhr.responseText;
+                 console.log(response);
+             }
+         };
+         var appid = "wx3d117d5543df8afe";
+         xhr.open("GET", "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appid + "&redirect_uri=http://mascot.duapp.com/oauth2.php&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect", true);
+         xhr.send();
     },
 
     // update (dt) {},

@@ -3,7 +3,7 @@
   "_name": "player1",
   "_objFlags": 0,
   "_rawFiles": null,
-  "_duration": 0.65,
+  "_duration": 0.6833333333333333,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -18,7 +18,7 @@
             }
           },
           {
-            "frame": 0.2,
+            "frame": 0.25,
             "value": {
               "__uuid__": "d77bae49-ba9a-4292-93ae-b665377ef0a3"
             }
@@ -30,7 +30,7 @@
             }
           },
           {
-            "frame": 0.6333333333333333,
+            "frame": 0.6666666666666666,
             "value": {
               "__uuid__": "d77bae49-ba9a-4292-93ae-b665377ef0a3"
             }
