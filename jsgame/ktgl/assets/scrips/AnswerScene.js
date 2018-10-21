@@ -48,12 +48,14 @@ cc.Class({
         this.judgement = null;
         this.dead_times = 0;
         //匹配倒计时 10秒 TODO
-        this.Pipei_time = 10; ///改为0跳过匹配阶段 
+        this.Pipei_time = 4; ///改为0跳过匹配阶段 
         //答题时间
         this.Answer_time = 5; 
         //我自己的位置
         this.MyIndex =1;
         this.MySide = Player.Side.left;
+        //自己是否在移动
+        this.isMoving = false;
 
     },
     initUI:function(){
@@ -92,7 +94,7 @@ cc.Class({
         {
             // var node = this.nodes[i]
             var PlayerClass = new Player()
-            PlayerClass.init(i)
+            PlayerClass.init()
             if(this.left_player_num>=side_player_max_num || this.right_player_num>=side_player_max_num)
             {
                 this.match_player_num = i;
@@ -100,14 +102,18 @@ cc.Class({
             }
             if(PlayerClass.side == Player.Side.left)
             {
-                this.player_pos_left_node[this.left_player_num] = PlayerClass.player;
+                this.player_pos_left_node[this.left_player_num] = PlayerClass;
                 this.Panel_middle.addChild(PlayerClass.player);
+                PlayerClass.index = this.left_player_num
+                PlayerClass.targetindex = this.left_player_num
                 // PlayerClass.player.setPosition(this.player_pos_left[PlayerClass.player.index]) //目标位置
                 this.left_player_num++;
             }
             else if(PlayerClass.side == Player.Side.right){
-                this.player_pos_right_node[this.right_player_num] = PlayerClass.player;
+                this.player_pos_right_node[this.right_player_num] = PlayerClass;
                 this.Panel_middle.addChild(PlayerClass.player);
+                PlayerClass.index = this.right_player_num
+                PlayerClass.targetindex = this.right_player_num
                 // PlayerClass.player.setPosition(this.player_pos_right[PlayerClass.player.index]) //目标位置
                 this.right_player_num++;
             }
@@ -157,23 +163,27 @@ cc.Class({
                 for (var i = 0; i <last_left_player_num; i++) {
                     var moveAction = cc.moveTo(this.move_time,this.player_pos_left[left_needToRunPlayer+i]);
                     var delaytime = cc.delayTime(Math.random());
-                    this.player_pos_left_node[left_needToRunPlayer+i].runAction(cc.sequence(delaytime,moveAction )) ;
+                    this.player_pos_left_node[left_needToRunPlayer+i].player.runAction(cc.sequence(delaytime,moveAction )) ;
                 }
                 var last_right_player_num = this.right_player_num - right_needToRunPlayer;
                 for (var i = 0; i <last_right_player_num; i++) {
                     var moveAction = cc.moveTo(this.move_time,this.player_pos_right[right_needToRunPlayer+i]);
                     var delaytime = cc.delayTime(Math.random());
-                    this.player_pos_right_node[right_needToRunPlayer+i].runAction(cc.sequence(delaytime,moveAction )) ;
+                    this.player_pos_right_node[right_needToRunPlayer+i].player.runAction(cc.sequence(delaytime,moveAction )) ;
                 }
                 // this.isBeginPipei = false
             }
+            else if(this.Pipei_time <3 && this.Pipei_time>0)
+            {
+
+            }
             else{
                 //当前这一秒左边多少人跑路
-                var secendToRunPlayer = (this.Pipei_time -3 )/28* this.left_player_num;
+                var secendToRunPlayer = (this.Pipei_time -3 )/ ((this.Pipei_time-3)*(this.Pipei_time-2)/2)* this.left_player_num;
                 for (var i = 0; i <Math.floor(secendToRunPlayer); i++) {
                     var moveAction = cc.moveTo(this.move_time,this.player_pos_left[left_needToRunPlayer+i]);
                     var delaytime = cc.delayTime(Math.random());
-                    this.player_pos_left_node[left_needToRunPlayer+i].runAction(cc.sequence(delaytime,moveAction )) ;
+                    this.player_pos_left_node[left_needToRunPlayer+i].player.runAction(cc.sequence(delaytime,moveAction )) ;
                 }
                 left_needToRunPlayer = left_needToRunPlayer+Math.floor(secendToRunPlayer);
                 //当前这一秒右边多少人跑路
@@ -181,7 +191,7 @@ cc.Class({
                 for (var i = 0; i <Math.floor(secendToRunPlayer); i++) {
                     var moveAction = cc.moveTo(this.move_time,this.player_pos_right[right_needToRunPlayer+i]);
                     var delaytime = cc.delayTime(Math.random());
-                    this.player_pos_right_node[right_needToRunPlayer+i].runAction(cc.sequence(delaytime,moveAction )) ;
+                    this.player_pos_right_node[right_needToRunPlayer+i].player.runAction(cc.sequence(delaytime,moveAction )) ;
                 }
                 right_needToRunPlayer = right_needToRunPlayer+Math.floor(secendToRunPlayer);
             }
@@ -212,6 +222,8 @@ cc.Class({
                 this.BeginGameStateJUDGE();
             }
             this.lbl_question_title.string = Answer_time;
+            //移动其他答题的人们
+            this.runOtherPerson();
             Answer_time--;
         }
         this.schedule(this.QuestionCallback,1);
@@ -263,15 +275,135 @@ cc.Class({
     rightClickEvent:function(){
         //自己的主角往左移动
         this.judgement = "对";
-
+        
     },
     //错误的点击
     wrongClickEvent:function(){
         //自己的主要向右移动
         this.judgement = "错";
     },
-    //自己跑路
-    runMyNode:function(){
+    //别人跑路
+    runOtherPerson:function(){
+        //后期针对题目难度 要划分占边的人数
+        //随机出来 这一秒 有多少人在移动
+        cc.log("左边多少人"+this.left_player_num)
+        cc.log("右边多少人"+this.right_player_num)
+        var runPersionNum_left = Math.floor(Math.random() * 10);
+        if (runPersionNum_left>this.left_player_num)
+        {
+            runPersionNum_left = this.left_player_num
+        }
+        else if(runPersionNum_left + this.right_player_num >30)
+        {
+            runPersionNum_left = runPersionNum_left - (runPersionNum_left + this.right_player_num -30)
+        }
+        cc.log("runPersionNum_left"+runPersionNum_left)
+        for (let i = 0; i < runPersionNum_left; i++) {
+            var index = Math.floor(Math.random()*this.player_pos_left_node.length)
+            this.player_pos_left_node[index].side = Player.Side.right
+            cc.log("左边 谁移动  " + index);
+            //将这个人挪到右边
+            var other_index = Math.floor(Math.random()*this.player_pos_right_node.length)
+            this.player_pos_left_node[index].targetindex = other_index;
+            cc.log("左边 移动到  " + other_index);
 
-    }
+            this.player_pos_right_node.splice(other_index,0,this.player_pos_left_node[index]);//二参数为0 添加元素
+            this.player_pos_left_node.splice(index,1);//二参数为1 删除元素
+            //右边的node index往后挪
+            for (var j = other_index+1; j < this.player_pos_right_node.length; j++) {
+                this.player_pos_right_node[j].targetindex = j
+            }
+            for (var k = index; k<this.player_pos_left_node.length;k++)
+            {
+                this.player_pos_left_node[k].targetindex = k
+            }
+            //修改数据
+            this.left_player_num--;
+            this.right_player_num++;
+            //runNode(other_index,Player.Side.right);
+        }
+
+        var runPersionNum_right = Math.floor(Math.random()*10)
+        if (runPersionNum_right>this.right_player_num)
+        {
+            runPersionNum_right = this.right_player_num
+        }
+        else if(runPersionNum_right + this.left_player_num >30)
+        {
+            runPersionNum_right = runPersionNum_right - (runPersionNum_right + this.left_player_num -30)
+        }
+        cc.log("runPersionNum_right"+runPersionNum_right)
+        for (let i = 0; i < runPersionNum_right; i++) {
+            var index = Math.floor(Math.random()*this.player_pos_right_node.length)
+            this.player_pos_right_node[index].side = Player.Side.left
+
+            cc.log("右边 谁移动  " + index);
+            //将这个人挪到右边
+            var other_index = Math.floor(Math.random()*this.player_pos_left_node.length)
+            this.player_pos_right_node[index].targetindex = other_index;
+
+            cc.log("右边 移动到  " + other_index);
+
+            this.player_pos_left_node.splice(other_index,0,this.player_pos_right_node[index]);//二参数为0 添加元素
+            this.player_pos_right_node.splice(index,1);//二参数为1 删除元素
+            //右边的node index往后挪
+            for (var j = other_index+1; j < this.player_pos_left_node.length; j++) {
+                this.player_pos_left_node[j].targetindex = j
+            }
+            for (var k = index; k<this.player_pos_right_node.length;k++)
+            {
+                this.player_pos_right_node[k].targetindex = k
+            }
+            //修改数据
+            this.right_player_num--;
+            this.left_player_num++;
+        }
+        for (var i = 0; i < this.player_pos_left_node.length; i++) {
+            if(this.player_pos_left_node[i].targetindex != this.player_pos_left_node[i].index)
+            {
+                // cc.log("左边 i   "+i + "from "+ this.player_pos_left_node[i].index  +" to " + this.player_pos_left_node[i].targetindex );
+                this.runNode(i,Player.Side.left)
+            }
+        }
+        for (var i = 0; i < this.player_pos_right_node.length; i++) {
+            if(this.player_pos_right_node[i].targetindex != this.player_pos_right_node[i].index)
+            {
+                // cc.log("右边 i   "+i + "from "+ this.player_pos_right_node[i].index  +" to " + this.player_pos_right_node[i].targetindex );
+                this.runNode(i,Player.Side.right)
+            }
+        }
+    },
+    //自己跑路
+    runMyPersion:function(){
+
+    },
+    runNode(other_index,side){
+        this.moveTime = 0.3
+        //挪自己的位置
+        if(side == Player.Side.right)
+        {
+            var delaytime = cc.delayTime(Math.random())
+            // var delaytime = cc.delayTime(0.2)
+            var moveTo = cc.moveTo(this.moveTime,this.player_pos_right[other_index])
+            var action = cc.sequence(delaytime,moveTo)
+            // cc.log("other_index"+other_index);
+            this.player_pos_right_node[other_index].player.runAction(action)
+            //TODO 放到回调里
+            this.player_pos_right_node[other_index].index = this.player_pos_right_node[other_index].targetindex
+        }
+        else
+        {
+            var delaytime = cc.delayTime(Math.random())
+            // var delaytime = cc.delayTime(0.2)
+            var moveTo = cc.moveTo(this.moveTime,this.player_pos_left[other_index])
+            var action = cc.sequence(delaytime,moveTo)
+            // cc.log("other_index"+other_index);
+            this.player_pos_left_node[other_index].player.runAction(action)
+            //TODO 放到回调里
+            this.player_pos_left_node[other_index].index = this.player_pos_left_node[other_index].targetindex
+        }
+
+    },
+
+
 });

@@ -27,7 +27,8 @@ cc.Class({
             type:Side
         },
         player : cc.Node,
-        index : null
+        index : null,
+        targetindex :null,
     },
     statics:
     {
@@ -36,11 +37,12 @@ cc.Class({
     ctor(){
         this.side = null;
         this.index = 0;
-        this.match_players_node = [];
+        // this.match_players_node = [];
     },
-    init:function(index){//maxPlayerNum){
+    init:function(){//maxPlayerNum){
         this.side = Math.random() >0.5 && Side.left || Side.right;
-        this.index = index
+        // this.index = index;
+        // this.targetindex = index;
         // for (var i = 1; i < maxPlayerNum; i++) {
             // var node = new cc.Node();
             // var sprite = node.addComponent(cc.Sprite);
@@ -50,8 +52,8 @@ cc.Class({
         var sprite = node.addComponent(cc.Sprite);
         sprite.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/ic_morenhead0.png'));
         // var node = new cc.Sprite('resources/ic_morenhead0.png');
-        this.player = node
-        this.match_players_node[index] = this.player
+        this.player = node;
+        // this.match_players_node[index] = this.player;
         // return node
         // return node
     }
