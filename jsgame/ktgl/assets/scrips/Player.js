@@ -67,29 +67,29 @@ cc.Class({
 
     },
 
-    //创建人物帧动画
-    createPlayerAnimation:function(animationName, animationTimes){
-        var animation = this.node.getComponent(cc.Animation);
-        // frames 这是一个 SpriteFrame 的数组.
-        var clip = cc.AnimationClip.createWithSpriteFrames("prefabs/player1.anim", 40);
-        clip.name = "player1";
-        clip.wrapMode = cc.WrapMode.Loop;
+    // //创建人物帧动画
+    // createPlayerAnimation:function(animationName, animationTimes){
+    //     var animation = this.node.getComponent(cc.Animation);
+    //     // frames 这是一个 SpriteFrame 的数组.
+    //     var clip = cc.AnimationClip.createWithSpriteFrames("prefabs/player1.anim", 40);
+    //     clip.name = "player1";
+    //     clip.wrapMode = cc.WrapMode.Loop;
 
-        // 添加帧事件
-        clip.events.push({
-            frame: 1,               // 准确的时间，以秒为单位。这里表示将在动画播放到 1s 时触发事件
-            func: "frameEvent",     // 回调函数名称
-            params: [1, "hello"]    // 回调参数
-        });
+    //     // 添加帧事件
+    //     clip.events.push({
+    //         frame: 1,               // 准确的时间，以秒为单位。这里表示将在动画播放到 1s 时触发事件
+    //         func: "frameEvent",     // 回调函数名称
+    //         params: [1, "hello"]    // 回调参数
+    //     });
 
-        animation.addClip(clip);
-        animation.play('player1');
-        return animation;
-    },
+    //     animation.addClip(clip);
+    //     animation.play('player1');
+    //     return animation;
+    // },
 
-    frameEvent:function(a,b){
-        cc.log(a);
-        cc.log(b);
-    }
+    // frameEvent:function(a,b){
+    //     cc.log(a);
+    //     cc.log(b);
+    // }
 
 });
