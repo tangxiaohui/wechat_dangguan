@@ -50,7 +50,7 @@ cc.Class({
 
     btnClick(event, customEventData){
          console.log("event=",event.type," data=",customEventData);
-         cc.director.loadScene("GameScene");
+         cc.director.loadScene("AnswerScene");
     },
 
     start () {
