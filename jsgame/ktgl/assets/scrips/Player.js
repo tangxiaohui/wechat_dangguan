@@ -54,10 +54,10 @@ cc.Class({
         var sprite = node.addComponent(cc.Sprite);
         if(index == 0)
         {
-            sprite.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/ic_morenhead1.png'));
+            sprite.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/answerscene/ren_1.png'));
         }
         else{
-            sprite.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/ic_morenhead0.png'));
+            sprite.spriteFrame = new cc.SpriteFrame(cc.url.raw('resources/answerscene/ren_2.png'));
         }
         // var node = new cc.Sprite('resources/ic_morenhead0.png');
 

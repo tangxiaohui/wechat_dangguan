@@ -27,13 +27,16 @@ cc.Class({
         btn_wrong:cc.Node,
         lbl_question_info:cc.Label,
         lbl_question_title:cc.Label,
-        lbl_score:cc.Label,
-
-        Panel_middle:cc.Node,
+        panel_root:cc.Node,
     },
 
     onLoad(){
-        
+        //获取控件
+        this.lbl_question_info = cc.find("Canvas/panel_root/img/img_datiban/lbl_question_info");
+        this.lbl_question_title = cc.find("Canvas/panel_root/img/img_datiban/lbl_question_title");
+        this.btn_right = cc.find("Canvas/panel_root/btn/btn_right");
+        this.btn_wrong = cc.find("Canvas/panel_root/btn/btn_wrong");
+        this.panel_root = cc.find("Canvas/panel_root");
         //匹配中 准备进人
         this.gameState = GameState.PIPEI;
         // this.isBeginPipei = false;
@@ -108,7 +111,7 @@ cc.Class({
             if(PlayerClass.side == Player.Side.left)
             {
                 this.player_pos_left_node[this.left_player_num] = PlayerClass;
-                this.Panel_middle.addChild(PlayerClass.player);
+                this.panel_root.addChild(PlayerClass.player);
                 PlayerClass.player.setLocalZOrder (10000- this.left_player_num)
                 PlayerClass.index = this.left_player_num
                 PlayerClass.targetindex = this.left_player_num
@@ -117,7 +120,7 @@ cc.Class({
             }
             else if(PlayerClass.side == Player.Side.right){
                 this.player_pos_right_node[this.right_player_num] = PlayerClass;
-                this.Panel_middle.addChild(PlayerClass.player);
+                this.panel_root.addChild(PlayerClass.player);
                 PlayerClass.player.setLocalZOrder( 10000- this.right_player_num)
                 PlayerClass.index = this.right_player_num
                 PlayerClass.targetindex = this.right_player_num
