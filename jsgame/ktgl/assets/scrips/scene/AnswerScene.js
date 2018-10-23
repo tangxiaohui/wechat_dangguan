@@ -16,7 +16,7 @@ var GameState = cc.Enum({
     REVIVE: 4,
     END: 5
 }); 
-var side_player_max_num = 30;
+var side_player_max_num = 10;
 
 cc.Class({
     extends: cc.Component,
@@ -73,10 +73,10 @@ cc.Class({
         this.player_pos_left = new Array();
         this.player_pos_right = new Array();
         for (var i = 0; i <side_player_max_num; i++) {
-            this.player_pos_left[i] = cc.v2(100+i%3*100,400+Math.floor(i/3)*60) //位置上下会挤一些
+            this.player_pos_left[i] = cc.v2(100+i%3*100,400+Math.floor(i/3)*100) //位置上下会挤一些
         }
         for (var i = 0; i < side_player_max_num; i++) {
-            this.player_pos_right[i] = cc.v2(450+i%3*100,400+Math.floor(i/3)*60)
+            this.player_pos_right[i] = cc.v2(450+i%3*100,400+Math.floor(i/3)*100)
         }
         //左边和右边的人数 初始化都是0
         this.left_player_num = 0;
@@ -221,7 +221,7 @@ cc.Class({
             }
             this.lbl_question_title.string = Answer_time;
             //移动其他答题的人们
-            // this.runOtherPerson();
+            this.runOtherPerson();
             Answer_time--;
         }
         this.schedule(this.QuestionCallback,1);
@@ -277,8 +277,8 @@ cc.Class({
         if(this.MySide == Player.Side.right)
         {
             var index = this.MyIndex
-            if(this.player_pos_right_node[index].isMoving == false)
-            {
+            // if(this.player_pos_right_node[index].isMoving == false)
+            // {
                 this.player_pos_right_node[index].side = Player.Side.left
                 // cc.log("右边 谁移动  " + index);
                 //将这个人挪到右边
@@ -320,7 +320,7 @@ cc.Class({
                 
                 this.MySide = Player.Side.left
                 this.MyIndex = other_index
-            }
+            // }
         
         }
     },
@@ -332,8 +332,8 @@ cc.Class({
         {
 
             var index = this.MyIndex
-            if(this.player_pos_left_node[index].isMoving == false)
-            {
+            // if(this.player_pos_left_node[index].isMoving == false)
+            // {
                 this.player_pos_left_node[index].side = Player.Side.right
                 // cc.log("左边 谁移动  " + index);
                 //将这个人挪到右边
@@ -373,7 +373,7 @@ cc.Class({
 
                 this.MySide = Player.Side.right
                 this.MyIndex = other_index
-            }
+            // }
         }
     },
     //别人跑路
@@ -395,8 +395,12 @@ cc.Class({
         cc.log("runPersionNum_left"+runPersionNum_left)
         for (let i = 0; i < runPersionNum_left; i++) {
             var index = Math.floor(Math.random()*this.player_pos_left_node.length)
-            if(this.player_pos_left_node[index].isMoving == false)
+            if(this.MySide == Player.Side.left && index == this.MyIndex)
             {
+                continue
+            }
+            // else if(this.player_pos_left_node[index].isMoving == false)
+            // {
                 this.player_pos_left_node[index].targetside = Player.Side.right
                 // cc.log("左边 谁移动  " + index);
                 //将这个人挪到右边
@@ -417,8 +421,7 @@ cc.Class({
                 //修改数据
                 this.left_player_num--;
                 this.right_player_num++;
-            }
-            //runNode(other_index,Player.Side.right);
+            // }
         }
 
         var runPersionNum_right = Math.floor(Math.random()*10)
@@ -433,8 +436,12 @@ cc.Class({
         cc.log("runPersionNum_right"+runPersionNum_right)
         for (let i = 0; i < runPersionNum_right; i++) {
             var index = Math.floor(Math.random()*this.player_pos_right_node.length)
-            if(this.player_pos_right_node[index].isMoving == false)
+            if(this.MySide == Player.Side.right && index == this.MyIndex)
             {
+                continue
+            }
+            // if(this.player_pos_right_node[index].isMoving == false)
+            // {
                 this.player_pos_right_node[index].targetside = Player.Side.left
 
                 // cc.log("右边 谁移动  " + index);
@@ -457,22 +464,22 @@ cc.Class({
                 //修改数据
                 this.right_player_num--;
                 this.left_player_num++;
-            }
+            // }
         }
         for (var i = 0; i < this.player_pos_left_node.length; i++) {
             if(this.player_pos_left_node[i].targetindex != this.player_pos_left_node[i].index || 
             this.player_pos_left_node[i].targetside != this.player_pos_left_node[i].side)//&& this.player_pos_left_node[i].isMoving==false)
             {
-                cc.log("左边 i   "+i + "from "+ this.player_pos_left_node[i].index  +" to " + this.player_pos_left_node[i].targetindex );
-                this.runNode(i,Player.Side.left)
+                cc.log("side "+this.player_pos_left_node[i].side + " targetside "+ this.player_pos_left_node[i].targetside+ " i "+i + "from "+ this.player_pos_left_node[i].index  +" to " + this.player_pos_left_node[i].targetindex );
+                this.runNode(i,this.player_pos_left_node[i].targetside)
             }
         }
         for (var i = 0; i < this.player_pos_right_node.length; i++) {
             if(this.player_pos_right_node[i].targetindex != this.player_pos_right_node[i].index || 
-            this.player_pos_left_node[i].targetside != this.player_pos_left_node[i].side)//&& this.player_pos_right_node[i].isMoving==false)
+            this.player_pos_right_node[i].targetside != this.player_pos_right_node[i].side)//&& this.player_pos_right_node[i].isMoving==false)
             {
-                cc.log("右边 i   "+i + "from "+ this.player_pos_right_node[i].index  +" to " + this.player_pos_right_node[i].targetindex );
-                this.runNode(i,Player.Side.right)
+                cc.log("side "+this.player_pos_right_node[i].side + " targetside "+ this.player_pos_right_node[i].targetside+ "i   "+i + "from "+ this.player_pos_right_node[i].index  +" to " + this.player_pos_right_node[i].targetindex );
+                this.runNode(i,this.player_pos_right_node[i].targetside)
             }
         }
     },
@@ -495,7 +502,8 @@ cc.Class({
                 // this.player_pos_right_node[other_index].player.stopAllActions()
             })
             var action = cc.sequence(delaytime,moveTo,callback)
-            
+            cc.log(other_index + " right现在的位置 " +this.player_pos_right_node[other_index].player.x + " " + this.player_pos_right_node[other_index].player.y)
+            cc.log(other_index + " right要去的位置 " +this.player_pos_right[other_index].x + " " + this.player_pos_right[other_index].y)
             // cc.log("other_index"+other_index);
             this.player_pos_right_node[other_index].player.runAction(action)
             //TODO 放到回调里
@@ -515,6 +523,9 @@ cc.Class({
             })
             var action = cc.sequence(delaytime,moveTo,callback)
             // cc.log("other_index"+other_index);
+            cc.log(other_index + " left现在的位置 " +this.player_pos_left_node[other_index].player.x + " " + this.player_pos_left_node[other_index].player.y)
+            cc.log(other_index + " left要去的位置 " +this.player_pos_left[other_index].x + " " + this.player_pos_left[other_index].y)
+            
             this.player_pos_left_node[other_index].player.runAction(action)
             //TODO 放到回调里
             this.player_pos_left_node[other_index].index = this.player_pos_left_node[other_index].targetindex
