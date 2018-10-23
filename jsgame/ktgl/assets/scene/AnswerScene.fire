@@ -1309,10 +1309,20 @@
       "__id__": 2
     },
     "_enabled": true,
-    "btn_right": null,
-    "btn_wrong": null,
-    "lbl_question_info": null,
-    "lbl_question_title": null,
-    "panel_root": null
+    "btn_right": {
+      "__id__": 7
+    },
+    "btn_wrong": {
+      "__id__": 5
+    },
+    "lbl_question_info": {
+      "__id__": 14
+    },
+    "lbl_question_title": {
+      "__id__": 12
+    },
+    "panel_root": {
+      "__id__": 3
+    }
   }
 ]

@@ -44,7 +44,13 @@ cc.Class({
         this.targetside = this.side
         this.isMoving = false
         // this.index = index;
-        // this.targetindex = index;
+        this.targetindex = index;
+        this.playerFlag = -1;
+        //自己的标志 以后可以给其他人也加上标识
+        if(index == 0)
+        {
+            this.playerFlag = index;
+        }
         // for (var i = 1; i < maxPlayerNum; i++) {
             // var node = new cc.Node();
             // var sprite = node.addComponent(cc.Sprite);

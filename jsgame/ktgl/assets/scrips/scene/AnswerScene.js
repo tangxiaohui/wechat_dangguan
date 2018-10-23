@@ -32,10 +32,10 @@ cc.Class({
 
     onLoad(){
         //获取控件
-        this.lbl_question_info = cc.find("Canvas/panel_root/img/img_datiban/lbl_question_info");
-        this.lbl_question_title = cc.find("Canvas/panel_root/img/img_datiban/lbl_question_title");
-        this.btn_right = cc.find("Canvas/panel_root/btn/btn_right");
-        this.btn_wrong = cc.find("Canvas/panel_root/btn/btn_wrong");
+        // this.lbl_question_info = cc.find("Canvas/panel_root/img/img_datiban/lbl_question_info");
+        // this.lbl_question_title = cc.find("Canvas/panel_root/img/img_datiban/lbl_question_title");
+        // this.btn_right = cc.find("Canvas/panel_root/btn/btn_right");
+        // this.btn_wrong = cc.find("Canvas/panel_root/btn/btn_wrong");
         this.panel_root = cc.find("Canvas/panel_root");
         //匹配中 准备进人
         this.gameState = GameState.PIPEI;
@@ -75,10 +75,10 @@ cc.Class({
         //初始化 玩家所有的位置
         this.player_pos_left = new Array();
         this.player_pos_right = new Array();
-        for (var i = 0; i <side_player_max_num; i++) {
+        for (var i = 0; i <side_player_max_num+6; i++) {
             this.player_pos_left[i] = cc.v2(100+i%3*100,400+Math.floor(i/3)*100) //位置上下会挤一些
         }
-        for (var i = 0; i < side_player_max_num; i++) {
+        for (var i = 0; i < side_player_max_num+6; i++) {
             this.player_pos_right[i] = cc.v2(450+i%3*100,400+Math.floor(i/3)*100)
         }
         //左边和右边的人数 初始化都是0
@@ -215,6 +215,7 @@ cc.Class({
         this.lbl_question_info.string = questioninfo.question;
         this.Answer_info = questioninfo.answer;
         this.QuestionCallback = function(){
+            this.runOtherPerson();
             if (Answer_time ==0)
             {
                 this.unschedule(this.QuestionCallback)
@@ -224,7 +225,10 @@ cc.Class({
             }
             this.lbl_question_title.string = Answer_time;
             //移动其他答题的人们
-            this.runOtherPerson();
+            // if ( Math.floor(Answer_time %2) == 1 )
+            // {
+            
+            // }
             Answer_time--;
         }
         this.schedule(this.QuestionCallback,1);
@@ -386,7 +390,7 @@ cc.Class({
         //随机出来 这一秒 有多少人在移动
         cc.log("左边多少人"+this.left_player_num)
         cc.log("右边多少人"+this.right_player_num)
-        var runPersionNum_left =  Math.floor(Math.random() * 10);
+        var runPersionNum_left =  5//Math.floor(Math.random() * 10);
         if (runPersionNum_left>this.left_player_num)
         {
             runPersionNum_left = this.left_player_num
@@ -398,18 +402,18 @@ cc.Class({
         cc.log("runPersionNum_left"+runPersionNum_left)
         for (let i = 0; i < runPersionNum_left; i++) {
             var index = Math.floor(Math.random()*this.player_pos_left_node.length)
-            if(this.MySide == Player.Side.left && index == this.MyIndex)
+            if(this.player_pos_left_node[index].playerFlag == 0)
             {
                 continue
             }
             // else if(this.player_pos_left_node[index].isMoving == false)
             // {
                 this.player_pos_left_node[index].targetside = Player.Side.right
-                // cc.log("左边 谁移动  " + index);
+                cc.log("左边 谁移动  " + index);
                 //将这个人挪到右边
                 var other_index = Math.floor(Math.random()*this.player_pos_right_node.length)
                 this.player_pos_left_node[index].targetindex = other_index;
-                // cc.log("左边 移动到  " + other_index);
+                cc.log("左边 移动到  " + other_index);
 
                 this.player_pos_right_node.splice(other_index,0,this.player_pos_left_node[index]);//二参数为0 添加元素
                 this.player_pos_left_node.splice(index,1);//二参数为1 删除元素
@@ -427,7 +431,7 @@ cc.Class({
             // }
         }
 
-        var runPersionNum_right = Math.floor(Math.random()*10)
+        var runPersionNum_right = 5//Math.floor(Math.random()*10)
         if (runPersionNum_right>this.right_player_num)
         {
             runPersionNum_right = this.right_player_num
@@ -439,7 +443,7 @@ cc.Class({
         cc.log("runPersionNum_right"+runPersionNum_right)
         for (let i = 0; i < runPersionNum_right; i++) {
             var index = Math.floor(Math.random()*this.player_pos_right_node.length)
-            if(this.MySide == Player.Side.right && index == this.MyIndex)
+            if(this.player_pos_right_node[index].playerFlag == 0)
             {
                 continue
             }
@@ -447,12 +451,12 @@ cc.Class({
             // {
                 this.player_pos_right_node[index].targetside = Player.Side.left
 
-                // cc.log("右边 谁移动  " + index);
+                cc.log("右边 谁移动  " + index);
                 //将这个人挪到右边
                 var other_index = Math.floor(Math.random()*this.player_pos_left_node.length)
                 this.player_pos_right_node[index].targetindex = other_index;
 
-                // cc.log("右边 移动到  " + other_index);
+                cc.log("右边 移动到  " + other_index);
 
                 this.player_pos_left_node.splice(other_index,0,this.player_pos_right_node[index]);//二参数为0 添加元素
                 this.player_pos_right_node.splice(index,1);//二参数为1 删除元素
@@ -498,7 +502,7 @@ cc.Class({
         if(side == Player.Side.right)
         {
             // this.player_pos_right_node[other_index].isMoving = true;
-            var delaytime = cc.delayTime(Math.random())
+            var delaytime = cc.delayTime(Math.random()*0.69)
             var moveTo = cc.moveTo(this.moveTime,this.player_pos_right[other_index])
             var callback = cc.callFunc(function(){
                 // self.player_pos_right_node[other_index].isMoving = false;
