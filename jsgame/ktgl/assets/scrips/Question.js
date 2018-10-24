@@ -27,85 +27,26 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
+        paiming:null,
+        all_match_player:null
     },
-
-    // LIFE-CYCLE CALLBACKS:
-
-    //初始化题库
-    // ctor(){
-    //     this.questions = {}; // 存储解析出来的JSON数据
-    //     this.question_num =0;
-
-    //     // var question_num;
-    //     // var questions = {}; 
-    //     // cc.loader.loadRes('tiku.json', function (err, object) {
-    //     //     if (err) {
-    //     //         console.log(err);
-    //     //         return;
-    //     //     }
-
-    //     //     let engine = object.engine; // engine = box2D
-    //     //     let ver = object.version;   // ver = 2.3.1
-    //     //     let bodies = object.bodies; // bodies是个数组
-    //     //     let joints = object.joints; // joints是个数组
-
-    //     //     // 需在回调外面提前用self代替this
-    //     //     // self.questions = object; // box2d是整个对象
-
-    //     //     this.question_num = object.length;
-    //     //     // 将循环2次，因为bodies是个拥有2个对象的数组
-    //     //     for (let x=0; x < object.length; x++) {
-    //     //         let root = object[x]; // root是个对象
-    //     //          this.questions[x] = root.id; // 第1次循环root_name = root
-    //     //          this.questions[x] = root.question; // type = static
-    //     //          this.questions[x] = root.answer; // gravity = 0.2
-
-    //     //     }
-    //     // });
-        
-    // },
     init:function(){
-        // var question_num;
-        // var questions = {}; 
-        // cc.loader.loadRes('tiku.json', function (err, object) {
-        //     if (err) {
-        //         console.log(err);
-        //         return;
-        //     }
+        //用户答的题目集合，最后一道应该是他错的 或者 他得了第一名
+        this.myQustion = new Array()
+        // this.rightNum = 0
+        this.paiming = 0
+        this.all_match_player = 0
+
+        //题库集合
         this.questions = {}; // 存储解析出来的JSON数据
         this.question_num =0;
         var self = this;
-        //     let engine = object.engine; // engine = box2D
-        //     let ver = object.version;   // ver = 2.3.1
-        //     let bodies = object.bodies; // bodies是个数组
-        //     let joints = object.joints; // joints是个数组
 
-        //     // 需在回调外面提前用self代替this
-        //     // self.questions = object; // box2d是整个对象
-
-        //     question_num = object.length;
-        //     // 将循环2次，因为bodies是个拥有2个对象的数组
-        //     for (let x=0; x < object.length; x++) {
-        //         let root = object[x]; // root是个对象
-        //          questions[x] = root.id; // 第1次循环root_name = root
-        //          questions[x] = root.question; // type = static
-        //          questions[x] = root.answer; // gravity = 0.2
-
-        //     }
-        // });
         cc.loader.loadRes('tiku.json', function (err, object) {
             if (err) {
                 console.log(err);
                 return;
             }
-
-            // let engine = object.engine; // engine = box2D
-            // let ver = object.version;   // ver = 2.3.1
-            // let bodies = object.bodies; // bodies是个数组
-            // let joints = object.joints; // joints是个数组
-
-            // 需在回调外面提前用self代替this
-            // self.questions = object; // box2d是整个对象
 
             self.question_num = object.length;
             // 将循环2次，因为bodies是个拥有2个对象的数组
@@ -132,6 +73,11 @@ cc.Class({
         cc.log("题目"+info.question);
         info.answer = this.questions[index].answer;
         cc.log("答案"+info.answer);
+
+        this.myQustion[this.myQustion.length]=[]
+        this.myQustion[this.myQustion.length-1].question = info.question
+        this.myQustion[this.myQustion.length-1].answer = info.answer
+        
         return info
     },
     // update (dt) {},

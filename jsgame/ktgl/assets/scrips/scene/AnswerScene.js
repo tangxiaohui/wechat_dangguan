@@ -28,6 +28,11 @@ cc.Class({
         lbl_question_info:cc.Label,
         lbl_question_title:cc.Label,
         panel_root:cc.Node,
+        //结算界面相关
+        panel_revive:cc.Node,
+        btn_exit:cc.Node,
+        btn_revive:cc.Node,
+        lbl_time:cc.Label,
     },
 
     onLoad(){
@@ -41,8 +46,8 @@ cc.Class({
         this.gameState = GameState.PIPEI;
         // this.isBeginPipei = false;
         //初始化答题 题库相关
-        this.QuestionClass = new Question();
-        this.QuestionClass.init();
+        _G.QuestionClass = new Question();
+        _G.QuestionClass.init();
 
         this.initUI();
         //其实 应该两个类 一个是player 一个是一群玩家的类 简单点写了
@@ -62,6 +67,9 @@ cc.Class({
         //自己是否在移动
         this.isMoving = false;
 
+
+        //结算界面相关
+        this.reviveTime = 5;
     },
     initUI:function(){
         this.lbl_question_info.string = "匹配中";
@@ -69,7 +77,15 @@ cc.Class({
         this.btn_right.active = false;
         this.btn_wrong.active = false;
         this.btn_right.on(cc.Node.EventType.TOUCH_START,this.rightClickEvent,this);
-        this.btn_wrong.on(cc.Node.EventType.TOUCH_START,this.wrongClickEvent,this)
+        this.btn_wrong.on(cc.Node.EventType.TOUCH_START,this.wrongClickEvent,this);
+        //复活界面相关
+        if(_G.Enable_Ads_Sdk==true)
+        {
+            this.btn_exit.on(cc.Node.EventType.TOUCH_START,this.exitviveEvent,this);
+            this.btn_revive.on(cc.Node.EventType.TOUCH_START,this.reviveEvent,this);
+            this.lbl_time.string = "10";
+            this.panel_revive.setLocalZOrder(1000)
+        }
     },
     //初始化玩家终点位置
     initPlayer:function(){
@@ -87,7 +103,7 @@ cc.Class({
         this.left_player_num = 0;
         this.right_player_num = 0;
         //提前定好 这局会有多少人参加
-        this.match_player_num = 45+Math.random(10);
+        this.match_player_num = 50//45+Math.random(10);
         //初始化真正参与游戏的人们
         this.player_pos_left_node = new Array()
         this.player_pos_right_node = new Array()
@@ -114,7 +130,7 @@ cc.Class({
             {
                 this.player_pos_left_node[this.left_player_num] = PlayerClass;
                 this.panel_root.addChild(PlayerClass.player);
-                PlayerClass.player.setLocalZOrder (10000- this.left_player_num)
+                PlayerClass.player.setLocalZOrder (1000- this.left_player_num)
                 PlayerClass.index = this.left_player_num
                 PlayerClass.targetindex = this.left_player_num
                 // PlayerClass.player.setPosition(this.player_pos_left[PlayerClass.player.index]) //目标位置
@@ -123,7 +139,7 @@ cc.Class({
             else if(PlayerClass.side == Player.Side.right){
                 this.player_pos_right_node[this.right_player_num] = PlayerClass;
                 this.panel_root.addChild(PlayerClass.player);
-                PlayerClass.player.setLocalZOrder( 10000- this.right_player_num)
+                PlayerClass.player.setLocalZOrder( 1000- this.right_player_num)
                 PlayerClass.index = this.right_player_num
                 PlayerClass.targetindex = this.right_player_num
                 // PlayerClass.player.setPosition(this.player_pos_right[PlayerClass.player.index]) //目标位置
@@ -138,7 +154,7 @@ cc.Class({
                 PlayerClass.player.setPosition(cc.v2(820,1400));
             }
         }
-        
+        _G.QuestionClass.all_match_player = this.player_pos_left_node.length + this.player_pos_right_node.length
         // this.isBeginPipei = true;
         this.BeginGameStatePIPEI();
     },
@@ -211,7 +227,7 @@ cc.Class({
         //
         var Answer_time = this.Answer_time;
         //随机出一个题目
-        var questioninfo = this.QuestionClass.findQuestion();
+        var questioninfo = _G.QuestionClass.findQuestion();
         this.lbl_question_title.string = Answer_time;
 
         this.lbl_question_info.string = questioninfo.question;
@@ -238,6 +254,40 @@ cc.Class({
         }
         this.schedule(this.QuestionCallback,1);
     },
+    //开始复活
+    BeginGameStateREVIVE:function()
+    {
+        this.reviveCallBack = function(){
+            this.lbl_time.string = this.reviveTime
+            if(this.reviveTime==0){
+                this.panel_revive.active = false
+                this.BeginGameStateEnd()
+                this.unschedule(this.reviveCallBack)
+            }
+            this.reviveTime --;
+        }
+        this.schedule(this.reviveCallBack,1)
+    },
+    exitviveEvent:function()
+    {
+        this.unschedule(this.reviveCallBack)
+        this.panel_revive.active = false
+        this.BeginGameStateEnd()
+    },
+    reviveEvent:function()
+    {
+        //接入广告 玩家点击关闭以后执行回调 如果看完广告了则复活
+        //如果复活 则继续游戏 执行 BeginGameStateBEGIN() 和 this.unschedule(this.reviveCallBack)
+        //如果广告没看完 则倒计时继续 不理 这里 需不需要倒计时暂停 另议
+        this.BeginGameStateBEGIN()
+    },
+    //游戏结束 弹出结算界面
+    BeginGameStateEnd:function()
+    {
+        _G.QuestionClass.paiming = this.player_pos_left_node.length + this.player_pos_right_node.length
+        //这里存在一个bug，可以之后优化 答错了用户还可以复活，这里统计答题正确与否 取决于题库和排名进行计算
+        cc.director.loadScene("SettleScene");
+    },
     //开始判断题目
     BeginGameStateJUDGE:function()
     {
@@ -249,11 +299,11 @@ cc.Class({
             if(this.judgement == this.Answer_info)
             {
                 //正确
-                if(this.match_player_num == 1)
+                if(this.player_pos_left_node.length + this.player_pos_right_node.length == 1)
                 {
                     cc.log("吃鸡了！！！")
                     //TODO 弹出吃鸡的结算界面
-                    this.gameState = GameState.END
+                    this.BeginGameStateEnd()
                 }
                 else
                 {
@@ -265,17 +315,18 @@ cc.Class({
             else
             {
                 this.dead_times++
-                if(this.dead_times>=3)
+                if((_G.Enable_Ads_Sdk==true && this.dead_times>=3) || _G.Enable_Ads_Sdk == false)
                 {
                     cc.log("错误次数太多了，结束！")
-                    this.gameState = GameState.END;
                     //TODO 弹出结算界面
-
+                    this.BeginGameStateEnd()
                 }
                 else
                 {
                     cc.log("打错了，复活吧")
                     //弹出是否复活的界面 --玩家复活看广告，成功看完回调，继续beigin答题，未看完则还是继续复活，复活倒计时结束，也结束答题，弹出界面界面
+                    this.panel_revive.active = true
+                    this.BeginGameStateREVIVE()
                 }
             }
         }
@@ -564,10 +615,6 @@ cc.Class({
             }
         }
     },
-    //自己跑路
-    runMyPersion:function(){
-
-    },
     //哪个节点移动
     runNode(other_index,side){
         this.moveTime = 0.3
@@ -590,7 +637,7 @@ cc.Class({
             //TODO 放到回调里
             this.player_pos_right_node[other_index].index = this.player_pos_right_node[other_index].targetindex
             this.player_pos_right_node[other_index].side  = this.player_pos_right_node[other_index].targetside
-            this.player_pos_right_node[other_index].player.setLocalZOrder( 10000- other_index)
+            this.player_pos_right_node[other_index].player.setLocalZOrder( 1000- other_index)
         }
         else
         {
@@ -611,7 +658,7 @@ cc.Class({
             //TODO 放到回调里
             this.player_pos_left_node[other_index].index = this.player_pos_left_node[other_index].targetindex
             this.player_pos_left_node[other_index].side  = this.player_pos_left_node[other_index].targetside
-            this.player_pos_left_node[other_index].player.setLocalZOrder( 10000- other_index)
+            this.player_pos_left_node[other_index].player.setLocalZOrder( 1000- other_index)
         }
 
     },
