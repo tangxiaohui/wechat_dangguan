@@ -16,7 +16,7 @@ var GameState = cc.Enum({
     REVIVE: 4,
     END: 5
 }); 
-var side_player_max_num = 10;
+var side_player_max_num = 15;
 
 cc.Class({
     extends: cc.Component,
@@ -456,7 +456,7 @@ cc.Class({
         //随机出来 这一秒 有多少人在移动
         cc.log("左边多少人"+this.left_player_num)
         cc.log("右边多少人"+this.right_player_num)
-        var runPersionNum_left =  5//Math.floor(Math.random() * 10);
+        var runPersionNum_left =  Math.floor(Math.random() * 5);
         if (runPersionNum_left>this.left_player_num)
         {
             runPersionNum_left = this.left_player_num
@@ -501,7 +501,7 @@ cc.Class({
             // }
         }
 
-        var runPersionNum_right = 5//Math.floor(Math.random()*10)
+        var runPersionNum_right = Math.floor(Math.random()*5)
         if (runPersionNum_right>this.right_player_num)
         {
             runPersionNum_right = this.right_player_num
