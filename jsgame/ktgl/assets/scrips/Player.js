@@ -40,7 +40,7 @@ cc.Class({
         // this.match_players_node = [];
     },
     init:function(index){//maxPlayerNum){
-        this.side = Math.random() >0.5 && Side.left || Side.right;
+        this.side = Side.left //Math.random() >0.5 && Side.left || Side.right;
         this.targetside = this.side
         this.isMoving = false
         // this.index = index;
