@@ -46,6 +46,8 @@ cc.Class({
         this.gameState = GameState.PIPEI;
         // this.isBeginPipei = false;
         //初始化答题 题库相关
+        this.judgement = null;
+
         _G.QuestionClass = new Question();
         _G.QuestionClass.init();
 
@@ -55,8 +57,6 @@ cc.Class({
         //主角是否在移动中
         this.myPlayerMoving = false
         this.initPlayer();
-
-        this.judgement = null;
         this.dead_times = 0;
         //匹配倒计时 10秒 TODO
         this.Pipei_time = 4; ///改为0跳过匹配阶段 
@@ -120,6 +120,11 @@ cc.Class({
             if(i ==0)
             {
                 this.MySide = PlayerClass.side
+                if(this.MySide == Player.Side.left)
+                    this.judgement = "对"
+                else{
+                    this.judgement = "错"
+                }
             }
             if(this.left_player_num>=side_player_max_num || this.right_player_num>=side_player_max_num)
             {
@@ -233,23 +238,25 @@ cc.Class({
         this.lbl_question_info.string = questioninfo.question;
         this.Answer_info = questioninfo.answer;
         this.QuestionCallback = function(){
-            if(this.myPlayerMoving == false)
-            {
-                this.runOtherPerson();
+            if(Answer_time <= this.Answer_time - 1){
+                if(this.myPlayerMoving == false && Answer_time>1)
+                {
+                    this.runOtherPerson();
+                }
+                if (Answer_time <=0)
+                {
+                    this.unschedule(this.QuestionCallback)
+                    this.gameState = GameState.JUDGE;
+                    //进入判题阶段
+                    this.BeginGameStateJUDGE();
+                }
+                this.lbl_question_title.string = Answer_time;
+                //移动其他答题的人们
+                // if ( Math.floor(Answer_time %2) == 1 )
+                // {
+                
+                // }
             }
-            if (Answer_time ==0)
-            {
-                this.unschedule(this.QuestionCallback)
-                this.gameState = GameState.JUDGE;
-                //进入判题阶段
-                this.BeginGameStateJUDGE();
-            }
-            this.lbl_question_title.string = Answer_time;
-            //移动其他答题的人们
-            // if ( Math.floor(Answer_time %2) == 1 )
-            // {
-            
-            // }
             Answer_time--;
         }
         this.schedule(this.QuestionCallback,1);
@@ -279,12 +286,20 @@ cc.Class({
         //接入广告 玩家点击关闭以后执行回调 如果看完广告了则复活
         //如果复活 则继续游戏 执行 BeginGameStateBEGIN() 和 this.unschedule(this.reviveCallBack)
         //如果广告没看完 则倒计时继续 不理 这里 需不需要倒计时暂停 另议
+        //重新创建自己的对象？还是只是先隐藏
+        this.panel_revive.active = false
         this.BeginGameStateBEGIN()
     },
     //游戏结束 弹出结算界面
     BeginGameStateEnd:function()
     {
-        _G.QuestionClass.paiming = this.player_pos_left_node.length + this.player_pos_right_node.length
+        //TODO 这里如果最后所有人都打错了。。。存在一个显示的bug
+        if(this.player_pos_left_node.length + this.player_pos_right_node.length ==0){
+            _G.QuestionClass.paiming = 3
+        }
+        else{    
+            _G.QuestionClass.paiming = this.player_pos_left_node.length + this.player_pos_right_node.length
+        }
         //这里存在一个bug，可以之后优化 答错了用户还可以复活，这里统计答题正确与否 取决于题库和排名进行计算
         cc.director.loadScene("SettleScene");
     },
@@ -293,9 +308,41 @@ cc.Class({
     {
         this.btn_wrong.active = false;
         this.btn_right.active = false;
+
+        
+
+        //动画播放完成后的回调
         this.judgeCallback = function(){
             //TODO 这里播放判断题目正确与否的动画,动画播放完成执行回调，走下面的
             this.unschedule(this.judgeCallback);
+
+            if(this.MySide == Player.Side.left){
+                this.MyIndex = this.findMyIndex(Player.Side.left)
+                this.tempPlayer = this.player_pos_left_node[this.MyIndex]
+            }
+            else if(this.MySide == Player.Side.right)
+            {
+                this.MyIndex = this.findMyIndex(Player.Side.right)
+                this.tempPlayer = this.player_pos_right_node[this.MyIndex]
+            }
+            //删除掉所有答错题目的人
+            if(this.Answer_info == "对")//清除掉右边所有人 并且动画在右边播放
+            {
+                for (var i = 0; i <this.player_pos_right_node.length; i++) {
+                    this.player_pos_right_node[i].player.removeFromParent()
+                }
+                this.player_pos_right_node = new Array();
+                this.right_player_num = 0
+            }
+            else if(this.Answer_info == "错")
+            {
+                for (var i = 0; i <this.player_pos_left_node.length; i++) {
+                    this.player_pos_left_node[i].player.removeFromParent()
+                }
+                this.player_pos_left_node = new Array();
+                this.left_player_num = 0
+               
+            }
             if(this.judgement == this.Answer_info)
             {
                 //正确
@@ -323,7 +370,7 @@ cc.Class({
                 }
                 else
                 {
-                    cc.log("打错了，复活吧")
+                    cc.log("答错了，复活吧")
                     //弹出是否复活的界面 --玩家复活看广告，成功看完回调，继续beigin答题，未看完则还是继续复活，复活倒计时结束，也结束答题，弹出界面界面
                     this.panel_revive.active = true
                     this.BeginGameStateREVIVE()
@@ -371,7 +418,7 @@ cc.Class({
                 //将这个人挪到右边
                 var other_index //= Math.floor((Math.random()-0.01)*3)
                 //挪的一边
-                if(this.player_pos_right_node.length==0)
+                if(this.player_pos_left_node.length==0)
                 {
                     other_index = 0
                     this.player_pos_right_node[index].targetindex = other_index;
@@ -397,13 +444,13 @@ cc.Class({
                 }
                 else 
                 {
-                    if (this.right_player_num<3){
+                    if (this.player_pos_right_node.length<=3){
                         other_index = Math.floor((Math.random()-0.01)*this.right_player_num)
                     }
                     else{
                         other_index = Math.floor((Math.random()-0.01)*3)
                     }
-                    this.player_pos_left_node[index].targetindex = other_index;
+                    this.player_pos_right_node[index].targetindex = other_index;
                     // cc.log("右边 移动到  " + other_index);
                     var temp = this.player_pos_right_node[index]
                     this.player_pos_right_node.splice(index,1);//二参数为1 删除元素
@@ -411,8 +458,8 @@ cc.Class({
                     this.player_pos_left_node.splice(other_index,1)
                     this.player_pos_left_node.splice(other_index,0,temp);//二参数为0 添加元素
 
-                    this.runNode(index,Player.Side.right)
                     this.runNode(other_index,Player.Side.left)
+                    this.runNode(index,Player.Side.right)
                 }
 
 
@@ -470,7 +517,7 @@ cc.Class({
                 }
                 else 
                 {
-                    if (this.player_pos_right_node.length<3){
+                    if (this.player_pos_right_node.length<=3){
                         other_index = Math.floor((Math.random()-0.01)*this.right_player_num)
                     }
                     else{
@@ -484,12 +531,9 @@ cc.Class({
                     this.player_pos_right_node.splice(other_index,1)
                     this.player_pos_right_node.splice(other_index,0,temp);//二参数为0 添加元素
 
-                    this.runNode(other_index,Player.Side.right)
                     this.runNode(index,Player.Side.left)
+                    this.runNode(other_index,Player.Side.right)
                 }
-
-
-                
                 this.left_player_num =this.player_pos_left_node.length;
                 this.right_player_num = this.player_pos_right_node.length
 
@@ -507,18 +551,27 @@ cc.Class({
         //随机出来 这一秒 有多少人在移动
         cc.log("左边多少人"+this.left_player_num)
         cc.log("右边多少人"+this.right_player_num)
-        var runPersionNum_left =  Math.floor(Math.random() * 5);
-        if (runPersionNum_left>this.left_player_num)
+        var runPersionNum_left
+        if(this.player_pos_left_node.length <= 3)
         {
-            runPersionNum_left = this.left_player_num
+            runPersionNum_left =0 
         }
-        else if(runPersionNum_left + this.right_player_num >30)
-        {
-            runPersionNum_left = runPersionNum_left - (runPersionNum_left + this.right_player_num -30)
+        else{
+            runPersionNum_left =  Math.floor(Math.random() * 5); //这里可能会均分人数
+            if (runPersionNum_left>this.left_player_num)
+            {
+                runPersionNum_left = this.left_player_num
+            }
+            else if(runPersionNum_left + this.right_player_num >30)
+            {
+                runPersionNum_left = runPersionNum_left - (runPersionNum_left + this.right_player_num -30)
+            }
         }
         cc.log("runPersionNum_left"+runPersionNum_left)
         for (let i = 0; i < runPersionNum_left; i++) {
-            var index = Math.floor(3+(Math.random()-0.001)*(this.player_pos_left_node.length-3))
+            //var index = Math.floor(3+(Math.random()-0.001)*(this.player_pos_left_node.length-3))
+            var index = Math.floor((Math.random()-0.001)*(this.player_pos_left_node.length))
+            //当人数少于3个的时候 
             if(index >= this.player_pos_left_node.length )
             {
                 continue
@@ -532,7 +585,8 @@ cc.Class({
                 this.player_pos_left_node[index].targetside = Player.Side.right
                 cc.log("左边 谁移动  " + index);
                 //将这个人挪到右边
-                var other_index = Math.floor(3+(Math.random()-0.001)*(this.player_pos_right_node.length-3))
+                // var other_index = Math.floor(3+(Math.random()-0.001)*(this.player_pos_right_node.length-3))
+                var other_index = Math.floor((Math.random()-0.001)*(this.player_pos_right_node.length))
                 this.player_pos_left_node[index].targetindex = other_index;
                 cc.log("左边 移动到  " + other_index);
 
@@ -552,14 +606,21 @@ cc.Class({
             // }
         }
 
-        var runPersionNum_right = Math.floor(Math.random()*5)
-        if (runPersionNum_right>this.right_player_num)
+        var runPersionNum_right 
+        if(this.player_pos_right_node.length <= 3)
         {
-            runPersionNum_right = this.right_player_num
+            runPersionNum_right =0 
         }
-        else if(runPersionNum_right + this.left_player_num >30)
-        {
-            runPersionNum_right = runPersionNum_right - (runPersionNum_right + this.left_player_num -30)
+        else{
+            runPersionNum_right = Math.floor(Math.random()*5)
+            if (runPersionNum_right>this.right_player_num)
+            {
+                runPersionNum_right = this.right_player_num
+            }
+            else if(runPersionNum_right + this.left_player_num >30)
+            {
+                runPersionNum_right = runPersionNum_right - (runPersionNum_right + this.left_player_num -30)
+            }
         }
         cc.log("runPersionNum_right"+runPersionNum_right)
         for (let i = 0; i < runPersionNum_right; i++) {

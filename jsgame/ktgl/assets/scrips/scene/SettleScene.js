@@ -21,10 +21,10 @@ cc.Class({
     start() {
         this.lbl_paiming_info.string = _G.QuestionClass.paiming +"/" + _G.QuestionClass.all_match_player
         if(_G.QuestionClass.paiming == 1){
-            this.lbl_paiming_info.string = _G.QuestionClass.myQustion.length + "道"
+            this.lbl_dati_info.string = _G.QuestionClass.myQustion.length + "道"
         }
         else{
-            this.lbl_paiming_info.string = _G.QuestionClass.myQustion.length - 1 +"道"
+            this.lbl_dati_info.string = _G.QuestionClass.myQustion.length - 1 +"道"
         }
         this.btn_continue.on(cc.Node.EventType.TOUCH_START,this.continueClickEvent,this)
         this.btn_exit.on(cc.Node.EventType.TOUCH_START,this.exitClickEvent,this)
