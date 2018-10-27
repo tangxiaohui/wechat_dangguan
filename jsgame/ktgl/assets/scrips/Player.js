@@ -68,9 +68,6 @@ cc.Class({
         // var node = new cc.Sprite('resources/ic_morenhead0.png');
 
         this.player = this.createPlayerAnimation('resources/answerscene/ren_',2);
-
-        // this.player = this.createPlayerAnimation(1,1);
-        // this.createPlayerAnimation(1,1);
     },
 
     //创建人物帧动画
@@ -87,25 +84,30 @@ cc.Class({
         var animation = nodeTest.addComponent(cc.Animation);
         
         /* 添加SpriteFrame到frames数组 */
-        var frames = [];
-        for (var i = 0; i < animationTimes; i++) {
-            frames[i] = new cc.SpriteFrame(cc.url.raw(animationName + (i+1) + '.png'));
-        };
-        var clip = cc.AnimationClip.createWithSpriteFrames(frames, animationTimes);
-        clip.name = 'anim_kowtow';
-        clip.wrapMode = cc.WrapMode.Loop;
+        // var frames = [];
+        // for (var i = 0; i < animationTimes; i++) {
+        //     frames[i] = new cc.SpriteFrame(cc.url.raw(animationName + (i+1) + '.png'));
+        // };
+        // var clip = cc.AnimationClip.createWithSpriteFrames(frames, animationTimes);
+        // clip.name = 'anim_kowtow';
+        // clip.wrapMode = cc.WrapMode.Loop;
  
-        /* 添加关键帧事件 */
-        clip.events.push({
-            frame: 1,                   // 准确的时间，以秒为单位。这里表示将在动画播放到 1s 时触发事件
-            func: 'frameEvent',         // 回调函数名称
-            params: [1, 'hello']        // 回调参数
-        });
+        // /* 添加关键帧事件 */
+        // clip.events.push({
+        //     frame: 1,                   // 准确的时间，以秒为单位。这里表示将在动画播放到 1s 时触发事件
+        //     func: 'frameEvent',         // 回调函数名称
+        //     params: [1, 'hello']        // 回调参数
+        // });
 
-        animation.addClip(clip);
-        animation.play('anim_kowtow');
+        cc.loader.loadRes("animation/kowtow", function(err, clip) {
+        	animation.addClip(clip, "kowtow");
+        	var animStatus = animation.play('kowtow');
+        	// animStatus.wrapMode = cc.WrapMode.Loop;
+        	animStatus.repeatCount = Infinity;
+        })
 
         return nodeTest;
+
     },
 
     frameEvent:function(a,b){
