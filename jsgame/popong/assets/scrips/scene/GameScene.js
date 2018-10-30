@@ -27,14 +27,31 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
+
+        panel_root:{
+            default: null,
+            type: cc.Sprite
+        }
     },
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad () {
+
+    },
 
     start () {
-
+        //动态加载方格
+        var self = this;
+        cc.loader.loadRes("GameScene/gz_1", cc.SpriteFrame, function(err, sf){
+            var scene = cc.director.getScene();
+            var node = new cc.Node("Sprite");
+            var sp = node.addComponent(cc.Sprite);
+            sp.SpriteFrame = sf;
+            scene.addChild(node);
+            // node.parent = scene;
+            node.setPosition(100, 100);
+        });
     },
 
     // update (dt) {},
