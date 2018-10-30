@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "btn_qunduizhan",
+    "texture": "3b47fe39-14e7-4b9b-888b-5038b34c07b5",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      222,
+      133
+    ],
+    "offset": [
+      0,
+      0.5
+    ],
+    "originalSize": [
+      222,
+      134
+    ]
+  }
+}

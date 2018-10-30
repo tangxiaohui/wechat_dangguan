@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "btn_dui",
+    "texture": "eac70703-b3c2-47b6-964b-163b6ffd1ed5",
+    "atlas": "",
+    "rect": [
+      2,
+      1,
+      179,
+      186
+    ],
+    "offset": [
+      0.5,
+      0
+    ],
+    "originalSize": [
+      182,
+      188
+    ]
+  }
+}

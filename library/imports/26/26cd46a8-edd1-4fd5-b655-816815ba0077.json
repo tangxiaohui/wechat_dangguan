@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "btnpaiwei",
+    "texture": "f9f92d47-a5f6-441c-b173-becf17fab69a",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      332,
+      241
+    ],
+    "offset": [
+      0,
+      0.5
+    ],
+    "originalSize": [
+      332,
+      242
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "baiban",
+    "texture": "24050e19-3f69-4b77-8ca4-a7fb1aa820c9",
+    "atlas": "",
+    "rect": [
+      1,
+      1,
+      443,
+      276
+    ],
+    "offset": [
+      -0.5,
+      0
+    ],
+    "originalSize": [
+      446,
+      278
+    ]
+  }
+}

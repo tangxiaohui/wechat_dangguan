@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "jitui",
+    "texture": "993007f8-018e-485c-a304-acfb9dbb4e5b",
+    "atlas": "",
+    "rect": [
+      1,
+      1,
+      143,
+      138
+    ],
+    "offset": [
+      -0.5,
+      0
+    ],
+    "originalSize": [
+      146,
+      140
+    ]
+  }
+}

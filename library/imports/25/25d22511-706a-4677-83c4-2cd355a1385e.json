@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "icon_xin",
+    "texture": "5a21cfc7-17f4-42aa-a744-383cb961b0c3",
+    "atlas": "",
+    "rect": [
+      2,
+      10,
+      56,
+      49
+    ],
+    "offset": [
+      0,
+      -4.5
+    ],
+    "originalSize": [
+      60,
+      60
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "heixian",
+    "texture": "ccc894fc-3f58-4703-9f63-93283e476af3",
+    "atlas": "",
+    "rect": [
+      1,
+      0,
+      51,
+      97
+    ],
+    "offset": [
+      0.5,
+      0.5
+    ],
+    "originalSize": [
+      52,
+      98
+    ]
+  }
+}

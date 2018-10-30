@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "qizi_1",
+    "texture": "e36c74f1-2757-416a-800a-10d7dc30ab3c",
+    "atlas": "",
+    "rect": [
+      2,
+      0,
+      332,
+      345
+    ],
+    "offset": [
+      1,
+      1.5
+    ],
+    "originalSize": [
+      334,
+      348
+    ]
+  }
+}

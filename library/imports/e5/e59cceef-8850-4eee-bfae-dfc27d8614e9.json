@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "datiban",
+    "texture": "143fe4fe-dbb7-4b9a-b5f4-9f9dd01c1e29",
+    "atlas": "",
+    "rect": [
+      0,
+      1,
+      666,
+      299
+    ],
+    "offset": [
+      0,
+      -0.5
+    ],
+    "originalSize": [
+      666,
+      300
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "doushou",
+    "texture": "8ba65995-46ca-41c8-90d9-bdcc3082bb90",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      282,
+      202
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      282,
+      202
+    ]
+  }
+}

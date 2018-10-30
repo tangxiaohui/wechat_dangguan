@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "ningzikuang",
+    "texture": "1eeefcf7-46be-4979-b54e-0d833aa16602",
+    "atlas": "",
+    "rect": [
+      1,
+      1,
+      342,
+      85
+    ],
+    "offset": [
+      0,
+      -0.5
+    ],
+    "originalSize": [
+      344,
+      86
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+2018-10-30T15:37:55.755Z - normal: Load ~/.CocosCreator/settings.json
+2018-10-30T15:37:55.760Z - normal: checking language setting...
+2018-10-30T15:37:55.760Z - normal: Language: zh
+2018-10-30T15:37:57.611Z - success: protocol editor-framework registered
+2018-10-30T15:37:57.612Z - success: protocol app registered
+2018-10-30T15:37:57.612Z - success: protocol theme registered
+2018-10-30T15:37:57.612Z - success: protocol packages registered
+2018-10-30T15:37:57.613Z - success: protocol unpack registerred
+2018-10-30T15:37:57.613Z - success: protocol disable-commonjs registerred
+2018-10-30T15:37:57.820Z - normal: connected!
+2018-10-30T15:37:57.822Z - normal: Check project /Users/linzhang/wegame/wechat_dangguan
+2018-10-30T15:37:57.824Z - normal: Initializing Cocos2d
+2018-10-30T15:37:58.280Z - normal: Initializing Asset Database
+2018-10-30T15:37:58.343Z - success: protocol uuid registerred
+2018-10-30T15:37:58.343Z - success: protocol db registerred
+2018-10-30T15:37:58.343Z - success: protocol thumbnail registerred
+2018-10-30T15:37:58.344Z - normal: Loading editor/builtin packages
+2018-10-30T15:37:58.377Z - success: anysdk loaded
+2018-10-30T15:37:58.574Z - success: assets loaded
+2018-10-30T15:37:58.581Z - success: builder loaded
+2018-10-30T15:37:58.584Z - success: cocos-analytics loaded
+2018-10-30T15:37:58.591Z - success: console loaded
+2018-10-30T15:37:58.654Z - success: fb-instant-games loaded
+2018-10-30T15:37:58.661Z - success: hierarchy loaded
+2018-10-30T15:37:58.669Z - success: inspector loaded
+2018-10-30T15:37:58.670Z - success: keystore loaded
+2018-10-30T15:37:58.685Z - success: node-library loaded
+2018-10-30T15:37:58.689Z - success: package-asset loaded
+2018-10-30T15:37:58.692Z - success: preferences loaded
+2018-10-30T15:37:58.699Z - success: project-exporter loaded
+2018-10-30T15:37:58.731Z - success: project-importer loaded
+2018-10-30T15:37:58.740Z - success: project-settings loaded
+2018-10-30T15:37:58.747Z - success: ui-kit loaded
+2018-10-30T15:37:58.756Z - success: ui-grid loaded
+2018-10-30T15:37:58.765Z - success: scene loaded
+2018-10-30T15:37:58.767Z - success: sprite-editor loaded
+2018-10-30T15:37:58.774Z - success: store loaded
+2018-10-30T15:37:58.786Z - success: timeline loaded
+2018-10-30T15:37:58.787Z - normal: Loading builtin packages
+2018-10-30T15:37:58.795Z - success: asset-db-debugger loaded
+2018-10-30T15:37:58.795Z - success: color-picker loaded
+2018-10-30T15:37:58.804Z - success: package-manager loaded
+2018-10-30T15:37:58.813Z - success: sdkbox loaded
+2018-10-30T15:37:58.825Z - success: tester loaded
+2018-10-30T15:37:58.832Z - success: ui-kit-preview-extra loaded
+2018-10-30T15:37:58.838Z - success: ui-kit-preview loaded
+2018-10-30T15:37:58.842Z - success: ui-tree loaded
+2018-10-30T15:38:00.560Z - normal: Initializing project /Users/linzhang/wegame/wechat_dangguan
+2018-10-30T15:38:00.568Z - normal: Loading packages
+2018-10-30T15:38:00.574Z - normal: Watching packages
+2018-10-30T15:38:00.593Z - normal: Run Application
+2018-10-30T15:38:02.210Z - success: preview server running at http://localhost:7456
+2018-10-30T15:38:08.463Z - normal: 1.9.1
+2018-10-30T15:38:14.296Z - info: shutdown preview server

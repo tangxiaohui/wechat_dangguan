@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "btn_zailaiyiju",
+    "texture": "b2fae229-9736-404e-a645-d475c20b3595",
+    "atlas": "",
+    "rect": [
+      1,
+      2,
+      276,
+      110
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      278,
+      114
+    ]
+  }
+}

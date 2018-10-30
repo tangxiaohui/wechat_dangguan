@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "paihangyeqian",
+    "texture": "0cf1380e-c474-47ba-9c24-4058488dec7e",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      45,
+      89
+    ],
+    "offset": [
+      -0.5,
+      0.5
+    ],
+    "originalSize": [
+      46,
+      90
+    ]
+  }
+}

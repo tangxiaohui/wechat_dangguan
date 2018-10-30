@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "yeqian",
+    "texture": "9013a85f-9654-4800-9a2d-3ac97c8bc08c",
+    "atlas": "",
+    "rect": [
+      1,
+      0,
+      36,
+      23
+    ],
+    "offset": [
+      0,
+      0.5
+    ],
+    "originalSize": [
+      38,
+      24
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "btn_lijifuhuo",
+    "texture": "3eaa311b-6eec-45a2-9cb2-23ccab30e1e2",
+    "atlas": "",
+    "rect": [
+      1,
+      1,
+      276,
+      110
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      278,
+      112
+    ]
+  }
+}

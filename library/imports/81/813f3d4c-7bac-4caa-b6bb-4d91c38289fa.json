@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "btn_fanhui",
+    "texture": "b7180e8d-ee7f-4643-8382-f8c57ced9762",
+    "atlas": "",
+    "rect": [
+      1,
+      1,
+      106,
+      75
+    ],
+    "offset": [
+      0,
+      -0.5
+    ],
+    "originalSize": [
+      108,
+      76
+    ]
+  }
+}

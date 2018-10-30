@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "lijifuhup",
+    "texture": "f469c9e2-3c64-47ae-8f69-892c6dee96aa",
+    "atlas": "",
+    "rect": [
+      3,
+      0,
+      291,
+      69
+    ],
+    "offset": [
+      0.5,
+      0.5
+    ],
+    "originalSize": [
+      296,
+      70
+    ]
+  }
+}

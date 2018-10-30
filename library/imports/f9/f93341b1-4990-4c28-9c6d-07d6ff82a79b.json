@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "genghuan",
+    "texture": "efe03a35-e49e-4f07-919c-1d2e50765d6f",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      102,
+      92
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      102,
+      92
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "touxiang_1",
+    "texture": "e41be5a2-763e-424f-ad58-c60071e75856",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      78,
+      81
+    ],
+    "offset": [
+      0,
+      0.5
+    ],
+    "originalSize": [
+      78,
+      82
+    ]
+  }
+}
